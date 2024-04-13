@@ -1,13 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import "bootstrap/dist/css/bootstrap.css";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import { SignInPage, SignUpPage } from "./components";
+import Layout from "./components/Layout";
+import ProtectedRoute from "./components/ProtectedRoute";
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<ProtectedRoute Component={Layout} />}>
+      <Route path="" element={<App />} />
+      <Route path="sign-up" element={<SignUpPage />} />
+      <Route path="sign-in" element={<SignInPage />} />
+    </Route>
+  )
+);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
